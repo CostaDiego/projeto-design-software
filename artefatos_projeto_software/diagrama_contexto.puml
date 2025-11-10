@@ -1,0 +1,50 @@
+@startuml Context_Diagram
+
+' Título do Diagrama
+title Diagrama de Contexto - Sistema de Gerenciamento de Atendimento (SGA)
+
+' Define o sistema principal
+cloud "Sistema de Gerenciamento de Atendimento (SGA)" as System {
+    component "Gerenciamento de Consultas" as Consultas
+    component "Gerenciamento de Prontuários" as Prontuarios
+    database "Banco de Dados (Dados Criptografados)" as DB
+}
+
+' Define os Atores/Usuários
+actor "Secretário(a)" as Secretary
+actor "Psicólogo(a) / Terapeuta" as Psychologist
+actor "Paciente" as Patient
+
+' Define Sistemas Externos
+rectangle "Sistemas de Comunicação (E-mail/SMS)" as CommunicationSystem
+database "Antigo Sistema (Excel/Word)" as LegacySystem
+
+' Relacionamentos (Fluxo de Informação)
+
+' 1. Secretário(a)
+Secretary --right-> Consultas : Cria/Cancela/Reagenda Consultas (RF001, RF002)
+Consultas --right-> Secretary : Alerta de Conflito de Horário (RF004)
+Secretary --down-> Prontuarios : Busca de dados do Paciente (RF006)
+Prontuarios --up-> Secretary : Dados de Agendamento/Identificação (RF006, RF007)
+
+' 2. Psicólogo(a)
+Psychologist --down-> Prontuarios : Cria/Edita Prontuários (RF003)
+Prontuarios --up-> Psychologist : Visualiza/Restaura Prontuário (RF005)
+Psychologist --left-> Consultas : Verifica a própria Agenda
+
+' 3. Paciente
+Patient .up.> System : Interação futura (Agendamento Online)
+
+' 4. Interações internas do Sistema
+Consultas <--> DB : Armazena Agendamentos
+Prontuarios <--> DB : Armazena Prontuários Criptografados (RNF001, RNF002)
+
+' 5. Sistemas Externos
+
+' Integração com o Antigo Sistema (para migração)
+LegacySystem --> System : Migração de dados de Pacientes/Históricos (Inicialmente)
+
+' Comunicação com Pacientes (Confirmações, Lembretes - Implícito no contexto)
+Consultas -> CommunicationSystem : Envio de Confirmações de Agendamento/Lembretes
+
+@enduml
