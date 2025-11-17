@@ -1,0 +1,62 @@
+@startuml Container_Diagram
+
+!include <c4/C4_Container.puml>
+
+' Título do Diagrama e Escopo
+title Diagrama de Containers - Sistema de Gerenciamento de Atendimento (SGA)
+
+System_Boundary(c1, "Sistema de Gerenciamento de Atendimento (SGA)") {
+
+    ' Frontends (Interfaces de Usuário)
+    Container(WebApp, "Aplicação Web (Frontend)", "SPA React/Vue", "Interface de usuário para Secretários e Psicólogos/Terapeutas. Gerencia Agendamento e Edição de Prontuários.")
+    Container(MobileApp, "Aplicativo Móvel Paciente (Futuro)", "iOS/Android/PWA", "Interface de usuário para Pacientes (Agendamento, Histórico de consultas).")
+
+    ' Backends (Serviços de Aplicação - Microsserviços Lógicos)
+    Container(APIGateway, "API Gateway / BFF", "Node.js/Spring Cloud Gateway", "Ponto de entrada único para o tráfego externo. Gerencia a segurança de sessão e roteamento.")
+    Container(AppointmentsSvc, "Microsserviço de Agendamentos", "Node.js/Python", "Gerencia toda a lógica de RF001, RF002, RF004 (Validação de Conflito, Recorrência).")
+    Container(RecordsSvc, "Microsserviço de Prontuários", "Java/C#", "Gerencia toda a lógica de RF003, RF005, RF006, RF010 (Criação, Edição, Versionamento, Acesso Criptografado).")
+    Container(AuthSvc, "Microsserviço de Autenticação & Permissão", "Node.js/Go", "Gerencia RF006, RF007 (Login, RBAC, Tokens de Sessão, Expiração RNF002).")
+
+    ' Armazenamento (Bancos de Dados e File Storage)
+    ContainerDb(AuthDB, "Banco de Dados de Autenticação", "PostgreSQL/MySQL", "Armazena credenciais (hash de senha) e informações de perfil/permissões.")
+    ContainerDb(MainDB, "Banco de Dados Principal", "PostgreSQL/MySQL", "Armazena dados de Agendamento, Metadados de Prontuários e Dados Comuns.")
+    ContainerDb(RecordStorage, "Armazenamento Criptografado de Prontuários", "NoSQL/Storage Seguro", "Armazena o *conteúdo* clínico dos prontuários (Blob, Chaves) com criptografia AES-256 (RNF001).")
+}
+
+' Atores Externos
+Person(Secretary, "Secretário(a)")
+Person(Psychologist, "Psicólogo(a)")
+
+' Sistemas Externos
+System_Ext(EmailSMS, "Sistema de Comunicação", "Serviço de e-mail/SMS (Terceiro)", "Envia confirmações e lembretes de consulta.")
+
+' ----------------------------------------------------
+' Relacionamentos
+' ----------------------------------------------------
+
+' 1. Atores com Frontend
+Secretary --> WebApp : Acessa para Agendar e Buscar Pacientes
+Psychologist --> WebApp : Acessa para Gerenciar Prontuários e Agenda
+
+' 2. Frontend com API Gateway
+WebApp --> APIGateway : Comunica-se via API REST/GraphQL (HTTPS - RNF001)
+
+' 3. Fluxo de Requisições
+APIGateway -> AuthSvc : Verifica/Valida o Token de Sessão (RNF002)
+
+APIGateway -> AppointmentsSvc : Requisições de Agendamento (RF001, RF002, RF004)
+APIGateway -> RecordsSvc : Requisições de Prontuário (RF003, RF005, RF006)
+
+' 4. Interações entre Serviços
+AppointmentsSvc --> MainDB : Armazena/Consulta Agendamentos
+AppointmentsSvc -> RecordsSvc : Consulta metadados de prontuário (Ex: paciente existe)
+
+RecordsSvc --> MainDB : Armazena Metadados, Busca por paciente
+RecordsSvc --> RecordStorage : Armazena/Recupera Conteúdo Criptografado (RNF001)
+RecordsSvc --> AuthSvc : Consulta Permissões do Usuário (RF006)
+
+AuthSvc --> AuthDB : Credenciais e RBAC (RF007)
+
+' 5. Comunicações Externas
+AppointmentsSvc -> EmailSMS : Envia notificação de Agendamento
+@enduml
