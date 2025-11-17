@@ -1,5 +1,7 @@
 @startuml Context_Diagram
 
+!include <c4/C4_Container.puml>
+
 ' Título do Diagrama
 title Diagrama de Contexto - Sistema de Gerenciamento de Atendimento (SGA)
 
