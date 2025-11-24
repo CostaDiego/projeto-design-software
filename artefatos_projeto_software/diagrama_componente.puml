@@ -1,0 +1,49 @@
+@startuml Component_Diagram
+
+!include <c4/C4_Component.puml>
+
+' Título do Diagrama e Escopo
+title Diagrama de Componentes (Nível 3) - Microsserviço de Prontuários (RecordsSvc)
+caption Detalhamento dos componentes internos do Microsserviço de Prontuários, focado nas regras de Segurança, Versionamento e Acesso.
+
+' Define o Container (Escopo) em Foco
+Container_Boundary(RecordsSvc_Boundary, "Microsserviço de Prontuários (RecordsSvc)") {
+
+    ' Componentes Principais
+    Component(RecordsController, "Records API Controller", "Controller REST/HTTP", "Recebe requisições da API Gateway para criar, ler e atualizar prontuários.")
+    Component(RecordsManager, "Records Business Logic Manager", "Componente de Serviço", "Aplica as regras de negócio: validação, versionamento, e coordenação do fluxo de dados.")
+    Component(VersionControl, "Componente de Versionamento", "Serviço Interno", "Implementa RF005: Lógica para criar e recuperar versões anteriores do prontuário (Histórico).")
+    Component(SecurityAccess, "Componente de Acesso de Segurança", "Serviço Interno", "Implementa RF006: Consulta permissões e aplica regras de confidencialidade.")
+    Component(DataEncryptor, "Componente de Criptografia de Dados", "Serviço Interno", "Implementa RNF001/RNF002: Criptografa o conteúdo antes do armazenamento.")
+
+    ' Interfaces de Armazenamento
+    Component(StorageAdapter, "Adaptador de Armazenamento", "ORM/Driver", "Interface de comunicação com os sistemas de armazenamento persistente.")
+}
+
+' Sistemas/Containers Externos
+Container_Ext(APIGateway, "API Gateway", "Node.js", "Front-end para o Microsserviço de Prontuários.")
+Container_Ext(AuthSvc, "Microsserviço de Autenticação", "Backend", "Fornece detalhes de permissão do usuário logado (RF006).")
+ContainerDb_Ext(RecordStorage, "Armazenamento Criptografado", "NoSQL/Blob Storage", "Armazena o *conteúdo clínico* dos prontuários (RNF001).")
+
+' ----------------------------------------------------
+' Relacionamentos Internos e Externos
+' ----------------------------------------------------
+
+' 1. Fluxo de Requisição (Externo -> Interno)
+Rel(APIGateway, RecordsController, "Faz requisição para /prontuarios/{id}")
+
+' 2. Fluxo de Processamento (Interno)
+Rel(RecordsController, RecordsManager, "Chama métodos de criação/leitura/atualização")
+Rel(RecordsManager, SecurityAccess, "Verifica se o usuário tem permissão para a ação (RF006)")
+
+' 3. Fluxo de Versionamento e Segurança
+Rel(RecordsManager, VersionControl, "Salva uma nova versão ou recupera o histórico (RF005)")
+Rel(RecordsManager, DataEncryptor, "Solicita criptografia/descriptografia do conteúdo")
+
+' 4. Fluxo de Persistência (Interno -> Externo)
+Rel(RecordsManager, StorageAdapter, "Persiste ou recupera dados")
+Rel(StorageAdapter, RecordStorage, "Armazena/Recupera Conteúdo Criptografado (RNF001)")
+
+' 5. Dependência Externa
+Rel(SecurityAccess, AuthSvc, "Consulta detalhe de Permissão do Usuário (REST API)")
+@enduml

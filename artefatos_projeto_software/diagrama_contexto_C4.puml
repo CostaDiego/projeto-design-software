@@ -1,0 +1,34 @@
+@startuml Context_Diagram_C4
+
+!include <c4/C4_Container.puml>
+
+' Título do Diagrama e Escopo
+title Diagrama de Contexto (Nível 1) - Sistema de Gerenciamento de Atendimento (SGA)
+caption O Sistema de Gerenciamento de Atendimento é o principal componente para digitalizar e agilizar a gestão de consultas e prontuários da clínica.
+
+' Define o Sistema em Foco
+System(SGA, "Sistema de Gerenciamento de Atendimento (SGA)", "Software para gestão de agendamentos, prontuários e perfis de pacientes em clínicas médicas.")
+
+' Define os Atores (Pessoas)
+Person(Secretary, "Secretário(a)", "Responsável pela criação, cancelamento e gestão de agendamentos e busca de informações de pacientes.")
+Person(Psychologist, "Psicólogo(a) / Terapeuta", "Responsável por acessar a agenda, criar, editar, versionar e gerenciar o conteúdo dos prontuários (dados clínicos).")
+Person(Patient, "Paciente", "Usuário do serviço da clínica. Futuramente poderá interagir para agendamento online.")
+
+' Define Sistemas Externos (Outros Sistemas)
+System_Ext(EmailSMS, "Sistema de Notificações (E-mail/SMS)", "Serviço de terceiros para envio de comunicação transacional (lembretes e confirmações de agendamento).")
+System_Ext(LegacySystem, "Sistema Legado (Excel/Word)", "Arquivos e planilhas antigos de agendamentos e históricos de pacientes (Fonte de dados inicial).")
+
+' ----------------------------------------------------
+' Relacionamentos
+' ----------------------------------------------------
+
+' 1. Atores com o SGA
+Rel(Secretary, SGA, "Gerencia Agendamentos e Busca dados de Pacientes (RF001, RF002, RF004, RF006)", "Web Application")
+Rel(Psychologist, SGA, "Gerencia Prontuários e Acesso à Agenda (RF003, RF005, RF006, RF010)", "Web Application")
+Rel(Patient, SGA, "Consulta e faz Agendamento (Futuro - RNF008, Benefício de Acessibilidade)")
+
+' 2. SGA com Sistemas Externos
+Rel(SGA, EmailSMS, "Envia Lembretes e Confirmações de Consulta", "REST API")
+Rel(LegacySystem, SGA, "Fornece dados Iniciais de Pacientes e Históricos", "Exportação/Migração")
+
+@enduml
