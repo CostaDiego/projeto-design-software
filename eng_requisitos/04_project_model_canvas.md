@@ -2,7 +2,7 @@
 
 ## Justificativas
 
-*   **Conflito de horários:** muitas vezes os atendentes se confundem e várias consultas para o mesmo horário.
+*   **Conflito de horários:** muitas vezes os atendentes se confundem e marcam várias consultas para o mesmo horário.
 *   **Perda de informações:** Documentos Word podem ser preenchidos de forma incompleta ou deletados.
 *   **Demora no atendimento:** para encontrar o histórico de um paciente, os funcionários precisam consultar diversos documentos.
 
@@ -10,7 +10,7 @@
 
 *   **Qualidade do serviço:** Promover a melhoria da qualidade do atendimento e a satisfação do paciente.
 *   **Acessibilidade:** Substituir a plataforma do Excel ou similar por um sistema que facilite a gestão e que seja intuitivo.
-*   **Unificação de arquivos:** Criar perfis para cada **[NOTA: O texto foi cortado aqui, mas a intenção é clara]** gerenciamento de prontuário.
+*   **Unificação de arquivos:** Criar perfis individualizados para cada paciente, facilitando o gerenciamento de prontuários.
 
 ## Benefícios
 
@@ -18,7 +18,7 @@
 *   **Integridade:** Através de um sistema de versionamento é possível garantir que nenhum texto escrito será perdido.
 *   **Confidencialidade:** Somente contas com a permissão adequada podem visualizar prontuários.
 *   **Satisfação:** Melhor experiência de usabilidade por parte da secretaria e psicólogos/terapeutas.
-*   **Unificação de arquivos:** Criar perfis para cada.
+*   **Unificação de arquivos:** Centralização de informações em perfis individualizados, facilitando o acesso e a gestão.
 
 ## Produto
 

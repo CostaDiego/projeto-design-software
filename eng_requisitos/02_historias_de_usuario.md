@@ -13,7 +13,7 @@
 ## HU3
 **Como Psicólogo**,
 **quero** garantir que os dados sensíveis de pacientes sejam confidenciais,
-**de modo que** nenhum outro funcionário possa acessar minha conta que permaneceu logada.
+**de modo que** o sistema não permita que outros funcionários acessem minha conta caso ela permaneça logada.
 
 ## HU4
 **Como Psicólogo**,
@@ -22,8 +22,8 @@
 
 ## HU5
 **Como Secretário**,
-**não quero** ter que me apressar para agendar uma nova consulta,
-**de modo que** atualmente, por ser um processo manual, a lentidão pode gerar desconforto aos pacientes.
+**quero** agendar consultas de forma rápida e eficiente,
+**de modo que** o processo não gere desconforto ou espera desnecessária aos pacientes.
 
 ## HU6
 **Como Paciente**,
@@ -33,4 +33,4 @@
 ## HU7
 **Como Paciente**,
 **quero que** o sistema que gerencia os prontuários seja devidamente seguro,
-**de modo que** não possa ser invadido por terceiros e ter os meus dados roubados.
+**de modo que** não possa ser invadido por terceiros e meus dados não sejam roubados.

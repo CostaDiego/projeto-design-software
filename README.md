@@ -10,8 +10,8 @@ O objetivo é substituir processos manuais (planilhas Excel e documentos Word) p
 
 O sistema proposto visa resolver problemas cruciais em clínicas de grande porte, conforme detalhado no artefato de contexto:
 
-*   **Problema Principal:** Conflitos de horários, perda ou preenchimento incompleto de informações sensíveis (prontuários), e lentidão no atendimento devido à consulta manual de diversos documentos.
-*   **Solução:** Implementar um sistema que garanta a **integridade**, **confidencialidade** e **agilidade** no gerenciamento de consultas e prontuários digitais.
+*   **Problema Principal:** Conflitos de horários, perda ou preenchimento incompleto de informações sensíveis (prontuários) e lentidão no atendimento devido à consulta manual de diversos documentos.
+*   **Solução:** Implementar um sistema que garanta a **integridade**, a **confidencialidade** e a **agilidade** no gerenciamento de consultas e prontuários digitais.
 
 ---
 
