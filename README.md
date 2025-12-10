@@ -27,6 +27,13 @@ Todos os documentos de requisitos e modelagem foram consolidados em formato Mark
 │ └── 05_business_model_canvas.md<br>
 └── README.md (Este arquivo)<br>
 
+Link do diagrama de contexto:
+https://github.com/CostaDiego/projeto-design-software/blob/main/artefatos_projeto_software/diagrama_contexto.puml
+Link do diagrama de container:
+https://github.com/CostaDiego/projeto-design-software/blob/main/artefatos_projeto_software/diagrama_container.puml
+Link do diagrama de componentes:
+https://github.com/CostaDiego/projeto-design-software/blob/main/artefatos_projeto_software/diagrama_componente.puml
+
 ## 📑 Artefatos de Requisitos e Modelagem
 
 Abaixo está uma descrição breve de cada artefato contido na pasta `eng_requisitos/`:
