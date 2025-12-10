@@ -29,6 +29,7 @@ Person(Psychologist, "Psicólogo(a)")
 
 ' Sistemas Externos
 System_Ext(EmailSMS, "Sistema de Comunicação", "Serviço de e-mail/SMS (Terceiro)", "Envia confirmações e lembretes de consulta.")
+System_Ext(sesgo, "Plataforma de Interoperabilidade de Saúde", "Recebe/fornece informações clínicas")
 
 ' ----------------------------------------------------
 ' Relacionamentos
@@ -59,4 +60,5 @@ AuthSvc --> AuthDB : Credenciais e RBAC (RF007)
 
 ' 5. Comunicações Externas
 AppointmentsSvc -> EmailSMS : Envia notificação de Agendamento
+MainDB -> sesgo :Envia prontuários para a plataforma de interoperabilidade para saúde.
 @enduml
